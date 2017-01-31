@@ -1,0 +1,45 @@
+
+<template name="progressBar">
+   
+<section class="main-section" id="progress-bar"> 
+<h4 style="text-align: center">Track or select each step as you progress through the form options: </h4>
+<p style="text-align: center">(Each step's colour will be a updated when the submit button of each form is clicked. +Now interactive for navigation + use back button)</p>
+<!-- <p style="text-align: center">(This is now interactive for navigation through forms below + NB: use back button.)</p> -->
+	<div class="checkout-wrap">
+	  <ul class="checkout-bar">
+
+	    <a href="#table-cont-services" id="prog-1-select">
+	    <li class="first next">
+	    Select from list</li></a>
+	    
+	    <a href="#form-cont-services" id="prog-2-select">
+	    <li class="">
+	    Edit form</li></a>	    
+	    
+<!-- {{#if isActiveRoute regex='service|facility'}} -->
+   <!-- Show only if the current route's name 
+   (or could do like ^products for  begins with 'products' ) -->
+	    <a href="#form-cont-sq-fac" id="prog-3-select">
+	    <li class="">
+	    Edit Quality data</li></a>
+<!-- {{/if}} -->	<!-- isActiveRoute -->
+
+<!-- {{#if isActiveRoute regex='service|organsation'}} -->
+	    <a href="#table-cont-fac" id="prog-4-select">
+	    <li class="">
+	    Link to facilities</li></a>
+<!-- {{/if}}	 --><!-- isActiveRoute -->
+
+	    <a href="#form-cont-services" id="prog-5-select">
+	    <li class="">
+	    (OR) add New</li></a>
+
+<!-- 	    <a href="#progress-bar" id="prog-6-select">
+	    <li class="">
+	    Done</li></a> -->	       
+	  </ul>
+	</div>
+</section>  <!-- main-section -->
+</template>  <!-- progressBar -->
+
+

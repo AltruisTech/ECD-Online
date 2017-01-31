@@ -1,0 +1,151 @@
+<!-- ************************************************************
+Template for homeContent page which shows some charts for a reporting dashoard. 
+Also adds the loadData template to call the loadCsvData helpers to load test data tables
+************************************************************ -->
+
+<template name="homeContent">
+
+  <div>  row 
+    <p> <strong> Select an icon in the top menu bar to search, view or edit data for: <br> - <i class="fa fa-wrench"></i> Service, <i class="fa fa-group"></i> Organisation, <i class="fa fa-home"></i> Facility, or <i class="fa fa-user"></i> Staff. </strong>     </p> 
+    <!-- <br> <br>     This page will soon include: <br> - data search options to select the data to view <br> -->
+  </div>  <!-- .row  #homeContent-->
+
+{{#if true}} 
+  <div class="header-title">
+      <h1>Status Dashboard</h1> 
+ </div>
+
+ <div class='container' id='main-container'>
+
+ <section id="charts">
+ <div class="row" id="reg-ben-charts" >
+      <div id="chart-01-registration-status">
+        <!-- For Google chart (testing) -->
+     </div> 
+
+     <div id="chart-01-registration-status-ben">
+        <!-- For Google chart (testing) -->
+     </div> 
+ </div> <!-- .row -->  
+
+ <div id="chart-02-staff-training-needs">
+    <!-- For Google chart (testing) -->
+ </div> 
+
+<div id="chart-03-basic-services">
+    <!-- For Google chart (testing) -->
+</div> 
+
+<div id="chart-04-sbg-totals">
+    <!-- For Google chart (testing) -->
+ </div> 
+
+<div class="row">
+  <div class="col-xs-12">
+              <a href="/reporting" id="reports-text-versions">
+                  <div class="icon">
+                      <i class="fa fa-report"></i>
+                  </div>
+                  <div class="button-text">
+              Detailed tabular versions available here.
+                  </div>
+              </a>
+  </div>
+ </div> <!-- row -->   
+
+ </section>
+<!-- From: CxFilter-DC.html : -->
+
+
+
+  </div> <!-- container -->
+{{/if }}  <!-- true/false -->
+ 
+</template>  <!-- homeContent -->
+
+
+
+<template name="loadData">
+
+  <div class="col-xs-12">
+              <a href="" id="delete-reload-all-data">
+                  <div class="icon">
+                      <i class="fa fa-trash-o"></i>
+                  </div>
+                  <div class="button-text">
+              DELETE and RELOAD all test tables.
+                  </div>
+              </a>
+  </div>
+
+  <div class="col-xs-12">
+              <a href="" id="reporting-table-reload">
+                  <div class="icon">
+                      <i class="fa fa-registered"></i>
+                  </div>
+                  <div class="button-text">
+              Call the shell Mongo shell script to reload reporting tables.
+                  </div>
+              </a>
+  </div>
+
+<div class="row">
+  <div class="col-xs-12">
+              <a href="" id="count-ofs-data">
+                  <div class="icon">
+                      <i class="fa fa-bar-chart"></i>
+                  </div>
+                  <div class="button-text">
+              Count all test data tables.
+                  </div>
+              </a>
+  </div>
+   <div class="col-xs-12">
+              <a href="" id="load-ofs-data">
+                  <div class="icon">
+                      <i class="fa fa-upload"></i>
+                  </div>
+                  <div class="button-text">
+              Upload OFS test data and/or summarise it.
+                  </div>
+              </a>
+  </div>
+  <div class="col-xs-12">
+              <a href="" id="load-quality-data">
+                  <div class="icon">
+                      <i class="fa fa-upload"></i>
+                  </div>
+                  <div class="button-text">
+              Upload Quality test data and/or summarise it.
+                  </div>
+              </a>
+  </div>
+  
+  <div class="col-xs-12">
+              <a href="" id="load-other-data">
+                  <div class="icon">
+                      <i class="fa fa-upload"></i>
+                  </div>
+                  <div class="button-text">
+              Upload Staff, ServBeneficiary and append ServExternalFunders + OrgManagementCommittee test data.
+                  </div>
+              </a>
+  </div>
+
+  <div class="col-xs-12">
+              <a href="" id="delete-ofs-data">
+                  <div class="icon">
+                      <i class="fa fa-trash-o"></i>
+                  </div>
+                  <div class="button-text">
+              DELETE all test data tables.
+                  </div>
+              </a>
+  </div>
+
+  </div> <!-- row -->
+</template>  <!-- staff -->
+
+
+
+

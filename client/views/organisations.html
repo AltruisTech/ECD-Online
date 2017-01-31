@@ -1,0 +1,61 @@
+<!-- ************************************************************
+Template for the organisation data page. 
+Initially displays a list of rows from the collection in a {{ > reactiveTable}}
+Then when one is selected, hides the table section and displys the view/edit {{> quickForm }}
+************************************************************ -->
+
+<template name="organisation">
+
+ {{#if Template.subscriptionsReady}}
+
+  {{#if isOFSListed}} <!-- show only until a row is selected -->
+<div class="header-title">
+      <h2 class="table-heading">Organisations list</h2>
+ </div>
+ <div class="table-container" id="table-cont-services">
+ <p class="table-sub-heading"> - filter with the text box then select a row to view/edit it's details</p>
+   {{> reactiveTable settings=settingsOFSTable fields=fields class="table table-bordered table-striped table-hover" id="service-table" }}
+   <!-- Only show forms  -->
+   </div>   <!-- #table-cont-serv -->
+  {{/if}} <!-- unless isOFSListed -->
+
+  {{#if isOFSSelected}}
+  <div class="main-container panel panel-default" id="form-cont-services">
+    <div class="panel-heading">
+     <h2 class="table-heading">Details for: {{OFSDesc}}</h2>
+     <p class="table-sub-heading"> - view and edit all the data for the selected organisation </p>
+ </div> <!-- .panel-heading -->
+   <div class="panel-body">
+     {{> quickForm collection=Collections.Organisation id="service1" type=formTypeOFS doc=selectedOFSDoc omitFields="xyz"  }}   
+     <!-- buttonClasses="XXsubmit-custom" -->
+   </div>  <!-- .panel-body -->
+ </div>   <!-- #form-cont-services -->
+  {{/if}} <!-- isOFSSelected -->
+
+  {{#if isQECDSelected}}  
+  <!-- BUT no OrgQualityECD table yet, so unused until then -->
+  <div class="main-container panel panel-default" id="form-cont-sq-fac">
+   <div class="panel-heading">
+       <h2 class="table-heading">Org Quality data</h2>
+       <p class="table-sub-heading"> - add or edit quality survey data for the selected service </p>
+   </div> <!-- .panel-heading -->
+   <div class="panel-body">
+      {{> quickForm collection=Collections.OrgQualityECD id="service4" type=formTypeSQECD doc=selectedSQECDDoc omitFields="serviceId" }}   
+   </div>  <!-- .panel-body -->
+   </div>   <!-- #form-container-sq-fac -->
+  {{/if}} <!-- isSQSelected -->
+
+  {{#if isOFSFacSelected}}
+ <div class="table-container" id="table-cont-fac">
+     <h2 class="table-heading">Facilities list</h2>
+     <p class="table-sub-heading"> - filter with the text box then select a row's checkbox to link it to the selected service </p>
+       <!-- {{> reactiveTable settings=settingsFacility fields=fields class="table table-bordered table-striped table-hover" id="facility-table" }} -->
+  </div>   <!-- #table-cont-fac -->
+  {{/if}}  <!-- isOFSFacSelected -->
+
+  {{else}}
+    {{> loading}} 
+  {{/if}}
+
+</template> <!-- service -->
+<!-- //################################################// -->

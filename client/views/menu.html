@@ -1,0 +1,108 @@
+
+<!-- ************************************************************
+Template for menu nav section at the top of each page. 
+Navigates to URLs which render the appropriate templates
+Also inlcudes the "ECD-Online app: " header on each page
+************************************************************ -->
+
+ <template name="menu">
+   
+<!-- ############## Lynda CH02-04: Advanced  Menu ############# -->
+            <section class="menu-section">
+                <nav id="advanced-nav" class="advanced-nav menu" role="navigation">
+                    <ul>
+                       <li class="logo-image">
+                            <a href="http://www.nag.org.za/" title="Open the www.nag.org.za website" target="_blank">
+            <div id="logo-image" class="logo-image">
+              <img src="/images/NAG-Logo-White-196x78.png">
+            </div>                      
+                            </a>
+                          </li>
+            <li class="{{isActiveRoute regex='/'}} menu-active" >
+                            <a href="/">
+                                <div class="icon">
+                                    <i class="fa fa-home"></i>
+                                </div>
+                                <div class="button-text">
+                            Home <span>..back to the start</span>
+                                </div>
+                            </a>
+                        </li>
+    <!--  ##### menu item separator ##### -->
+            <li class="{{isActiveRoute regex='service'}} menu-active" >
+                            <a href="/service">
+                                <div class="icon">
+                                    <i class="fa fa-wrench"></i>
+                                </div>
+                                <div class="button-text">
+                            Srv <span>..Services: select, view or edit</span>
+                                </div>
+                            </a>
+                        </li>
+    <!--  ##### menu item separator ##### -->
+            <li class="{{isActiveRoute regex='organisation'}} menu-active" >
+                            <a href="/organisation">
+                                <div class="icon">
+                                    <i class="fa fa-group"></i>
+                                </div>
+                                <div class="button-text">
+                            Org <span>..Organisation: select, view or edit</span>
+                                </div>
+                            </a>
+                        </li>
+    <!--  ##### menu item separator ##### --> 
+            <li class="{{isActiveRoute regex='facility'}} menu-active" >
+                            <a href="/facility">
+                                <div class="icon">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
+                                <div class="button-text">
+                            Fac <span>..Facilities: select, view or edit</span>
+                                </div>
+                            </a>
+                        </li>
+    <!--  ##### menu item separator ##### --> 
+            <li class="{{isActiveRoute regex='staff'}} menu-active" >
+                            <a href="/staff">
+                                <div class="icon">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                                <div class="button-text">
+                            Staff <span>..Staff: select, view or edit</span>
+                                </div>
+                            </a>
+                        </li>
+          <li class="login-box">
+             <!-- {{#if isInRole 'view-all,edit-all,admin,guest'}} -->
+             {{#if currentUser}}
+             <div id="login-buttons" class="login-buttons-dropdown-align-left">
+              <h4>Welcome,</h4>
+                  {{> loginButtons}} 
+              </div>
+             {{else}}
+             <div id="login-buttons" class="login-buttons-dropdown-align-right">
+                 <h4 id="zz" style="text-align: center; color: red">User login required:</h4>
+                  {{> loginButtons}}   
+              </div>
+            {{/if}} <!-- isInRole -->
+          </li>
+
+                    </ul>
+                </nav><!-- #advanced-nav .advanced-nav -->
+            </section><!-- .menu-section -->
+<!--  <p style="text-align: center">(Each menu item above will be a page link, though not yet linked up..)</p> -->
+
+   <div class="header-title">
+        <h1>ECD-Online app: {{pageTitlefromRoute}} page</h1> 
+             {{#unless currentUser}}
+                 <h4 style="text-align: center; color: red">User login required (top right), or page below will be blank. </h4> 
+                 <br> 
+        <div id="header-image" class="header-image">
+            <a href="http://www.nag.org.za/" title="Open the www.nag.org.za website" target="_blank">
+           <img src="/images/NAG_LOGO_medium.png">  </a>  
+           <br>        
+        </div>
+       {{/unless}} <!-- isInRole -->
+          </div>
+
+</template>  <!-- menu -->

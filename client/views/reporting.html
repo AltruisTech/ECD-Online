@@ -1,0 +1,154 @@
+<template name="reporting">
+
+ <!-- {{#if Template.subscriptionsReady}} -->
+
+
+ <div class="panel-group" id="accordion">
+<!-- Collapse 1: Text Report 01 -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="">Dashboard 01: PCR registration status by municipality </a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body">
+ <div class="table-container" id="table-cont-services">
+     {{> reactiveTable settings=settingsRep01 fields=fields class="table table-bordered table-striped table-hover" id="Rep01-table" }}
+</div>   
+      </div>
+<!--       <div class="panel-footer">Click the below panel for the next report</div -->>
+    </div>
+  </div>
+
+ <!-- Collapse 2: Text Report 02 -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="">Dashboard 02: Staff training Needs by Local Municipality</a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body">
+ <div class="table-container" id="table-cont-services">
+     {{> reactiveTable settings=settingsRep02 fields=fields class="table table-bordered table-striped table-hover" id="Rep02-table" }}
+</div>   
+      </div>
+    </div>
+  </div>
+
+<!-- Collapse 3: Text Report 03 -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="">Dashboard 03: ECD Sites Requiring Basic Services </a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body">
+ <div class="table-container" id="table-cont-services">
+     {{> reactiveTable settings=settingsRep03 fields=fields class="table table-bordered table-striped table-hover" id="Rep03-table" }}
+</div>   
+      </div>
+    </div>
+  </div>
+
+<!-- Collapse 4: Text Report 04 -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="">Dashboard 04: Service beneficiary group totals by  Municipality </a>
+      </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body">
+ <div class="table-container" id="table-cont-services">
+     {{> reactiveTable settings=settingsRep04 fields=fields class="table table-bordered table-striped table-hover" id="Rep04-table" }}
+</div>   
+      </div>
+    </div>
+  </div>
+
+        <div id="header-image" class="header-image">
+            <a href="http://www.nag.org.za/" title="Open the www.nag.org.za website" target="_blank">
+           <img src="/images/NAG_LOGO_medium.png">  </a>          
+        </div>
+   </div> <!-- .panel-group -->
+
+</template> <!-- reporting -->
+ 
+
+<template name="reportingMovedToHome">
+
+  {{#if false}} 
+ <h2>CxFilter-DC testing</h2>
+
+
+<!--   <div id="chart-line-hitsperday"></div>
+  <div id="chart-ring-year"></div>
+ -->
+<!-- <div id="bar-chart"></div>
+<div id="bar-chart-2"></div>
+<div id="row-chart"></div> -->
+<!-- <div id="pie-chart"></div> -->
+
+<div class="row">
+  <div class="col-xs-12">
+              <a href="" id="build-test-reports">
+                  <div class="icon">
+                      <i class="fa fa-bar-chart"></i>
+                  </div>
+                  <div class="button-text">
+              Build test dc.js graphs (and table).
+                  </div>
+              </a>
+  </div>
+ </div> <!-- row --> 
+
+ <div class="row">
+  <div class="col-xs-12">
+              <a href="" id="run-text-reports">
+                  <div class="icon">
+                      <i class="fa fa-bar-chart"></i>
+                  </div>
+                  <div class="button-text">
+              Run the text reports.
+                  </div>
+              </a>
+  </div>
+ </div> <!-- row -->
+  {{/if}} 
+
+  <!-- {{#if isReportSelected}} --> <!-- render if run reports is clicked -->
+<div class="header-title">
+      <h2 class="table-heading">Text Report 01: Registered And Funded ECD</h2>
+ </div>
+ <div class="table-container" id="table-cont-services">
+ <!-- <p class="table-sub-heading"> - filter with the text box then select a row to view/edit it's details</p> -->
+   {{> reactiveTable settings=settingsRep01 fields=fields class="table table-bordered table-striped table-hover" id="Rep01-table" }}
+   <!-- Only show forms  -->
+   </div>   <!-- #table-cont-serv -->
+ 
+<div class="header-title">
+      <h2 class="table-heading">Text Report 02: </h2>
+ </div>
+ <div class="table-container" id="table-cont-services">
+ <!-- <p class="table-sub-heading"> - filter with the text box then select a row to view/edit it's details</p> -->
+   {{> reactiveTable settings=settingsRep02 fields=fields class="table table-bordered table-striped table-hover" id="Rep02-table" }}
+   <!-- Only show forms  -->
+   </div>   <!-- #table-cont-serv -->
+
+  <div class="header-title">
+      <h2 class="table-heading">Text Report 03: </h2>
+ </div>
+ <div class="table-container" id="table-cont-services">
+ <!-- <p class="table-sub-heading"> - filter with the text box then select a row to view/edit it's details</p> -->
+   {{> reactiveTable settings=settingsRep03 fields=fields class="table table-bordered table-striped table-hover" id="Rep03-table" }}
+   <!-- Only show forms  -->
+   </div>   <!-- #table-cont-serv -->
+
+ <!-- {{/if}} --> <!--  isReportSelected -->
+    
+  <!-- {{/if}} subscriptionsReady  -->
+
+</template> <!-- reportingMovedToHome -->

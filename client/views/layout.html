@@ -1,0 +1,45 @@
+
+
+<!-- ************************************************************
+The main layout template used by Iron router to fill parts of the page with other templates. 
+eg {{> yield}}
+Also includes user login validation to restrict access to certain views for non permissioned users
+************************************************************ -->
+
+<head>  <!-- NB move to client\head.html soon  -->
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>NAG Web app</title>
+        <meta name="description" content="NAG data management system">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+      <link rel="shortcut icon" href="/images/favicon2.ico"  >
+
+     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+</head>
+
+<template name="layout">
+
+<body>
+  {{> menu}}
+{{#unless isActiveRoute regex='home|loadData|reporting'}}
+  {{#if currentUser}}
+     {{> progressBar }}
+  {{/if}}
+{{/unless}} <!-- isActiveRoute -->
+ <!-- {{#if isInRole 'view-all,edit-all,admin,guest,view-region'}} -->
+  {{#if currentUser}}
+   {{> yield}}
+ <!-- {{else}} -->
+    <!-- {{> loginRequired}} -->
+ {{/if}} <!-- isInRole -->
+   <!-- {{> service }} -->
+</body>
+  {{> footer}}    <!-- {{> loginButtons}} --> 
+</template> <!-- layout -->
+
+<template name="loading">
+   <h2 id="loading-template" style="text-align: center">LOADING....</h2>
+</template> 
+
