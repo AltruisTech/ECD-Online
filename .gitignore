@@ -1,0 +1,16 @@
+node_modules
+.meteor/local
+.deploySampleVersion
+.backup
+npm-debug.log
+*README.txt
+public/data
+client/modules
+.bkps/
+both/collections/.bkps
+.*.js
+.*.css
+.*.html
+*/.*
+*/*/.*
+*/*/*/.*
