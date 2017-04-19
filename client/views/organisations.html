@@ -2,13 +2,130 @@
 Template for the organisation data page. 
 Initially displays a list of rows from the collection in a {{ > reactiveTable}}
 Then when one is selected, hides the table section and displys the view/edit {{> quickForm }}
-************************************************************ -->
+************************************************************  -->
 
 <template name="organisation">
 
  {{#if Template.subscriptionsReady}}
 
-  {{#if isOFSListed}} <!-- show only until a row is selected -->
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+<!-- Collapse 1: Step 01: view or edit organisation details  -->
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="acc-heading-one">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-one" aria-expanded="false" aria-controls="collapse-one"> Step 01: view or edit organisation details </a>
+      </h4>
+    </div>
+    <div id="collapse-one" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="acc-heading-one">
+      <div class="panel-body">
+
+  <div class="main-container panel panel-default" id="form-cont-services">
+    <div class="panel-heading">
+     <h2 class="table-heading">Details for: {{OFSDesc}}</h2>
+     <p class="table-sub-heading"> - view and edit all the data for the selected organisation </p>
+ </div> <!-- .panel-heading -->
+   <div class="panel-body">
+     {{> quickForm collection=Collections.Organisation id="service1" type=formTypeOFS doc=selectedOFSDoc omitFields="xyz"  }}   
+   </div>  <!-- .panel-body -->
+ </div>   <!-- #form-cont-services -->
+      </div> <!-- .panel-body -->
+    </div> <!-- collapse-one-->
+  </div>  <!-- panel-default #1 -->
+
+<!-- Collapse 2: Step 02: view services provided  -->
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="acc-heading-two">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-two" aria-expanded="false" aria-controls="collapse-two"> Step 02: view services provided by this organisation</a>
+      </h4>
+    </div>
+    <div id="collapse-two" class="panel-collapse collapse " role="tabpanel" aria-labelledby="acc-heading-two">
+      <div class="panel-body">
+
+  <div class="main-container panel panel-default" id="form-cont-services">
+   <div class="panel-body">
+      <div class="table-container" id="table-ofs-merged">
+      <h2 class="table-heading">This Organisation <i>provides</i> these <b>services</b> <i>at</i> the listed sites /facilities:</h2>
+       {{> reactiveTable settings=settingsOFSMerged fields=fields class="table table-bordered table-striped table-hover" id="ofs-merged-table" }}
+     </div>   <!-- #table-ofs-merged -->
+   </div>  <!-- .panel-body -->
+ </div>   <!-- #form-cont-services -->
+      </div> <!-- .panel-body -->
+    </div> <!-- collapse-two-->
+  </div>  <!-- panel-default #2 -->
+
+<!-- Collapse 3: Step 03: add new service provided  -->
+  <div class="panel panel-default">
+
+     <div class="panel-heading" role="tab" id="acc-heading-three">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-three" aria-expanded="false" aria-controls="collapse-three"> Step 03: OR add a new service provided by this organisation </a>
+      </h4>
+    </div>
+    <div id="collapse-three" class="panel-collapse collapse" role="tabpanel" aria-labelledby="acc-heading-three">
+      <div class="panel-body">
+
+  <div class="main-container panel panel-default" id="form-cont-services">
+    <div class="panel-heading">
+     <h2 class="table-heading">Add a new service provided by: {{OFSDesc}}</h2>
+     <p class="table-sub-heading"> - view and edit all the data for the selected organisation </p>
+ </div> <!-- .panel-heading -->
+   <div class="panel-body">
+     {{> quickForm collection=Collections.Service id="service2" type=insert doc=selectedOFSDoc omitFields="xyz"  }}   
+   </div>  <!-- .panel-body -->
+ </div>   <!-- #form-cont-services -->
+      </div> <!-- .panel-body -->
+    </div> <!-- collapse-three-->
+  </div>  <!-- panel-default #3 -->
+
+<!-- Collapse 4: Step 04: add new staff providing this service (added in Step 03) -->
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="acc-heading-four">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-four" aria-expanded="false" aria-controls="collapse-four"> Step 04: add new staff providing this service (added in Step 03) </a>
+      </h4>
+    </div>
+    <div id="collapse-four" class="panel-collapse collapse" role="tabpanel" aria-labelledby="acc-heading-four">
+   <div class="panel-body">
+     <div class="main-container panel panel-default" id="form-cont-services">
+    <div class="panel-heading">
+     <h2 class="table-heading">Add new staff that provide this service: {{OFSDesc}}</h2>
+     <!-- <p class="table-sub-heading"> - add a new service provided by this organisation </p> -->
+     </div> <!-- .panel-heading -->
+   <div class="panel-body">
+     {{> quickForm collection=Collections.Staff id="service3" type=insert doc=selectedOFSDoc omitFields="xyz"  }}   
+   </div>  <!-- .panel-body -->
+ </div>   <!-- #form-cont-services -->
+      </div> <!-- .panel-body -->
+    </div> <!-- collapse-four-->
+  </div>  <!-- panel-default #four -->
+
+<!-- Collapse 5: Step 05: add new sites where this service is provided (as added in Step 03) -->
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="acc-heading-five">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-five" aria-expanded="false" aria-controls="collapse-five"> Step 05: add a new site / facility where this service is provided (added in Step 03) </a>
+      </h4>
+    </div>
+    <div id="collapse-five" class="panel-collapse collapse" role="tabpanel" aria-labelledby="acc-heading-five">
+<div class="panel-body">
+  <div class="main-container panel panel-default" id="form-cont-services">
+    <div class="panel-heading">
+     <h2 class="table-heading">add a new site / facility where this service is provided : {{OFSDesc}}</h2>
+     <!-- <p class="table-sub-heading"> - add a new service provided by this organisation </p> -->
+ </div> <!-- .panel-heading -->
+   
+   <div class="panel-body">
+     {{> quickForm collection=Collections.Facility id="service4" type=insert doc=selectedOFSDoc omitFields="xyz"  }}   
+   </div>  <!-- .panel-body -->
+ </div>   <!-- #form-cont-services -->
+      </div> <!-- .panel-body -->
+    </div> <!-- collapse-five-->
+  </div>  <!-- panel-default #five -->
+
+</div> <!-- .panel-group #accordion -->
+
+  {{#if isOFSListed}} <!-- show only until a row is selected --> 
 <div class="header-title">
       <h2 class="table-heading">Organisations list</h2>
  </div>
@@ -20,42 +137,13 @@ Then when one is selected, hides the table section and displys the view/edit {{>
   {{/if}} <!-- unless isOFSListed -->
 
   {{#if isOFSSelected}}
-  <div class="main-container panel panel-default" id="form-cont-services">
-    <div class="panel-heading">
-     <h2 class="table-heading">Details for: {{OFSDesc}}</h2>
-     <p class="table-sub-heading"> - view and edit all the data for the selected organisation </p>
- </div> <!-- .panel-heading -->
-   <div class="panel-body">
-     {{> quickForm collection=Collections.Organisation id="service1" type=formTypeOFS doc=selectedOFSDoc omitFields="xyz"  }}   
-     <!-- buttonClasses="XXsubmit-custom" -->
-   </div>  <!-- .panel-body -->
- </div>   <!-- #form-cont-services -->
+
   {{/if}} <!-- isOFSSelected -->
 
-  {{#if isQECDSelected}}  
-  <!-- BUT no OrgQualityECD table yet, so unused until then -->
-  <div class="main-container panel panel-default" id="form-cont-sq-fac">
-   <div class="panel-heading">
-       <h2 class="table-heading">Org Quality data</h2>
-       <p class="table-sub-heading"> - add or edit quality survey data for the selected service </p>
-   </div> <!-- .panel-heading -->
-   <div class="panel-body">
-      {{> quickForm collection=Collections.OrgQualityECD id="service4" type=formTypeSQECD doc=selectedSQECDDoc omitFields="serviceId" }}   
-   </div>  <!-- .panel-body -->
-   </div>   <!-- #form-container-sq-fac -->
-  {{/if}} <!-- isSQSelected -->
-
-  {{#if isOFSFacSelected}}
- <div class="table-container" id="table-cont-fac">
-     <h2 class="table-heading">Facilities list</h2>
-     <p class="table-sub-heading"> - filter with the text box then select a row's checkbox to link it to the selected service </p>
-       <!-- {{> reactiveTable settings=settingsFacility fields=fields class="table table-bordered table-striped table-hover" id="facility-table" }} -->
-  </div>   <!-- #table-cont-fac -->
-  {{/if}}  <!-- isOFSFacSelected -->
 
   {{else}}
     {{> loading}} 
   {{/if}}
 
 </template> <!-- service -->
-<!-- //################################################// -->
+

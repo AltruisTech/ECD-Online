@@ -70,7 +70,7 @@ ul.checkout-bar li.visited:before {
   background: #0174B7;
   z-index: 99999;
 }
-ul.checkout-bar li:nth-child(1):before {
+ul.checkout-bar a:nth-child(1) li:before {
   content: "1";
 }
 ul.checkout-bar a:nth-child(2) li:before {
@@ -189,3 +189,9 @@ ul.checkout-bar a {
     z-index: 99;
   }
 }
+
+/*.checkout-bar > .tooltip {
+  position: relative !important; 
+  top: -40px !important;
+} 
+*/

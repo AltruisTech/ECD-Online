@@ -24,7 +24,12 @@ Then when one is selected, hides the table section and displys the view/edit {{>
   {{/if}} <!-- unless isOFSListed -->
 
   {{#if isOFSSelected}}
-  <div class="main-container panel panel-default" id="form-cont-services">
+<div class="table-container" id="table-ofs-merged">
+  <h2 class="table-heading">This <b>service</b> is <i>provided by</i> the below <b>organisation</b> at the listed sites:</h2>
+   {{> reactiveTable settings=settingsOFSMerged fields=fields class="table table-bordered table-striped table-hover" id="ofs-merged-table-org" }}
+ </div>   <!-- #table-ofs-merged -->
+
+   <div class="main-container panel panel-default" id="form-cont-services">
     <div class="panel-heading">
      <h2 class="table-heading">Details for: {{OFSDesc}}</h2>
      <p class="table-sub-heading"> - view and edit all the data for the selected service </p>

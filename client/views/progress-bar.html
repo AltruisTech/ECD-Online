@@ -9,29 +9,29 @@
 	  <ul class="checkout-bar">
 
 	    <a href="#table-cont-services" id="prog-1-select">
-	    <li class="first next">
+	    <li class="first next" data-toggle="tooltip" title="Click to go back to the starting list" data-placement="bottom">
 	    Select from list</li></a>
 	    
 	    <a href="#form-cont-services" id="prog-2-select">
-	    <li class="">
-	    Edit form</li></a>	    
-	    
+	    <li class="" data-toggle="tooltip" title="Only click this one to go back from step 3 to 2" data-placement="bottom">
+	    Edit form</li></a>
+
 <!-- {{#if isActiveRoute regex='service|facility'}} -->
    <!-- Show only if the current route's name 
    (or could do like ^products for  begins with 'products' ) -->
 	    <a href="#form-cont-sq-fac" id="prog-3-select">
-	    <li class="">
+	    <li class="" data-toggle="tooltip" title="Click to view quality data - only for Service and Facility pages" data-placement="bottom">
 	    Edit Quality data</li></a>
 <!-- {{/if}} -->	<!-- isActiveRoute -->
 
 <!-- {{#if isActiveRoute regex='service|organsation'}} -->
 	    <a href="#table-cont-fac" id="prog-4-select">
-	    <li class="">
+	    <li class="" data-toggle="tooltip" title="Click to link (only) a service record  to its Facilities" data-placement="bottom">
 	    Link to facilities</li></a>
 <!-- {{/if}}	 --><!-- isActiveRoute -->
 
 	    <a href="#form-cont-services" id="prog-5-select">
-	    <li class="">
+	    <li class="" data-toggle="tooltip" title="Click to open a blank form for adding a new record" data-placement="bottom">
 	    (OR) add New</li></a>
 
 <!-- 	    <a href="#progress-bar" id="prog-6-select">

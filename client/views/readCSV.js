@@ -22,18 +22,21 @@ if (r == true) {
       // var service = this;
       e.preventDefault();
     var tableList = [ 'Organisation' , 'Facility', 'ServiceQualityECD', 'FacilityQualityECD' ,'Service', 'Staff', 'ServBeneficiaryGroup' ] ;
-    var tableCountMsgPrev = "" ;
+     // tableCountMsgPrev = "1 " ;
+     var tableCountMsg , tableCountMsgPrev ; 
 
     _.each(tableList, function(collectionName){
-      console.log(collectionName);
-    // var collectionCount = Collections[collectionName].find().count() ;
-    var collectionCount = "10" ;
-    // console.log(collectionName + ' : ' + collectionCount) ;
-      var tableCountMsg = tableCountMsgPrev.concat(collectionName, ': ', cstr(collectionCount), ', ' );
-      var tableCountMsgPrev = tableCountMsg
-      console.log(tableCountMsg);
+      // console.log(collectionName);
+    var collectionCount = Collections[collectionName].find().count() ;
+      // var collectionCount = Meteor.call('countCollectionZZ', collectionName );         
+      // console.log(collectionName + collectionCount);
+      // var tableCountMsg = tableCountMsgPrev.concat(collectionName, ': ', collectionCount.toString(), ', ' );
+      tableCountMsg += collectionName + ': ' + collectionCount + ', ' ;
+      tableCountMsgPrev = tableCountMsg ;
+      // console.log(tableCountMsg);
     });
-       alert('All test data table counts: ' + tableCountMsg);
+       // alert('All test data table counts: ' + tableCountMsg);
+      console.log(tableCountMsg);
 },
  'click #load-ofs-data': function(e) {
       // var service = this;

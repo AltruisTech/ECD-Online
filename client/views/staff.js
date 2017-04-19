@@ -40,6 +40,7 @@ Template.staff.helpers({
     isQECDSelected: () => Session.equals("formsToDisplay", "QECDSelected"),
     isOFSFacSelected: () => Session.equals("formsToDisplay", "OFSFacSelected"),
 
+
     settingsOFSTable: function() {
         return {
             collection: Collections.Staff,

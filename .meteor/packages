@@ -35,3 +35,5 @@ accounts-password
 accounts-ui
 accounts-google
 alanning:roles
+twbs:bootstrap
+dburles:google-maps

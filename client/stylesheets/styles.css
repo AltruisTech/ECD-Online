@@ -77,6 +77,7 @@ code {
 	}
 
 /*.table-sub-heading */
+.header-title,
 .header-title h1,
 .header-title h2,
 .main-section h2,
@@ -237,6 +238,14 @@ form > .panel > .panel-heading  {
 	max-width: 500px;
 }
 
+.panel-group .panel {
+  /*flex: 1 0 380px;  form min width = 300 - then wrap.*/
+  /*margin: 0em 0em;  */
+  margin-right: 1em;  
+  width: 98% ;
+  max-width: 2400px;
+}
+
  .main-container {	
 	flex: 1 0 600px; /* form min width = 300 - then wrap.*/
 	 margin-right: -2em;  
@@ -253,6 +262,39 @@ form > .panel > .panel-heading  {
 	flex-wrap: wrap; /* side-side until width no longer allows -> wrap*/
 	width: 100% ;
 } /* Flex approach is to make li the "flex container" and then the label and input box are "flex items"*/
+
+.reactive-table-navigation,
+.reactive-table-options {
+    display: flex;
+    width: 100%;
+}
+
+.reactive-table-options > div
+, .reactive-table-navigation > div {
+    flex: 1 0 300px;
+    text-align: center;
+}
+
+.reactive-table-columns-dropdown button {
+    float: none;
+}
+
+.reactive-table-options {
+	    margin-right: -5px;
+}
+
+.reactive-table thead, 
+.reactive-table thead a, 
+.tooltip-inner, 
+.btn-blue-lg {
+    background: linear-gradient(#0174B7 0px, #7EAFD2 100%);
+    color: white !important;
+}
+
+.tooltip-inner {
+    font-weight: bold;
+    font-size: 1.2em;
+}
 
 .form-control,		
 .form-group input[type="text"],
@@ -284,6 +326,11 @@ form > .panel > .panel-heading  {
 .checkbox-form > .panel-heading { 
 	width: 100% ;
 	max-height: 40px;
+}
+
+.panel-heading[role="tab"] ,
+.panel-collapse {
+  border: 5px solid #FFC519; 
 }
 
 .checkbox-form  .form-group { 
@@ -391,6 +438,10 @@ input[type="checkbox"]:checked + label::after {
   z-index: 1;*/
   }
 
+.menu-lose {
+	display: none !important;
+}
+
 .logo-image {
 	/*background: white ;*/
 	height: 100%;
@@ -406,23 +457,24 @@ input[type="checkbox"]:checked + label::after {
         padding: 0;
     }
 
+  .advanced-nav li {
+        display: flex; /* turns li into FB container too - to make <a>'s' fill VERTICLE space*/
+        margin: 0;
+        flex: 1 0 1.5em;  /*menu items mustn't shrink narrower than 1.5em (mobile) - wrap rather*/
+    }
+
 .advanced-nav li a {
     margin-top: 10px;
 /*    display: flex;
     justify-content: flex-start;
 */}
 
-  .advanced-nav li {
-        display: flex; /* turns li into FB container too - to make <a>'s' fill VERTICLE space*/
-        margin: 0;
-        flex: 1 1.2 12px;  /*menu items mustn't shrink narrower than 12em- wrap rather*/
-    }
 
-
-.icon {
-    flex: 0 0 1.5em; /* Icon will always be 1.5em with flex*/
+.advanced-nav li a .icon ,
+#login-buttons i {
+    flex: 0 0 1.2em; /* Icon will always be 1.5em with flex*/
     font-size: 1.5em;
-    margin: .1em .5em;
+    margin: .1em .4em;
 }
 
 .button-text {
@@ -439,13 +491,22 @@ input[type="checkbox"]:checked + label::after {
 }
 
 .login-box {
-	padding: 15px 10px 0 15px ;
-     border: 3px solid #e1e1e1;
-     border-radius: 5px;
+    padding: 1.3em 0.9em 0 1.3em;
+    border: 3px solid #e1e1e1;
+    border-radius: 5px;
+    float: right;
+    max-width: 150px;
 }
+
 .login-box  h3,
 .login-box  h4 {
      color: #e1e1e1;	
+}
+
+#login-buttons .login-close-text {
+    color: black ;
+    /*float: left;*/
+    /*padding-bottom: 8px;*/
 }
 
 @media screen and (min-width: 30em) {
@@ -463,15 +524,15 @@ input[type="checkbox"]:checked + label::after {
     justify-content: flex-start;
 }
 
-    .advanced-nav li {
+    .advanced-nav ul li {
         display: flex; /* turns li into FB container too - to make <a>'s' fill VERTICLE space*/
-        flex: 1 0 5em;  /*menu items mustn't shrink narrower than 12em- wrap rather*/
+        flex: 1 0 3em;  /*menu items mustn't shrink narrower than 12em- wrap rather*/
     }
 
 .button-text { display: inline-block; }
 .button-text span { display: block; }
 
-  }
+  } /* (min-width: 30em)*/
 
 /* Media queries ############################ */
 
@@ -566,6 +627,50 @@ form   > .panel-default  {
 	/*max-width: 50px;*/
 }
 
+/*.advanced-nav li a .icon ,
+#login-buttons i {
+    flex: 0 0 0.9em;  Icon will always be 1.5em with flex
+    font-size: 1.5em;
+    margin: .1em .2em;
+}
+*/
+
+.logged-in {
+    max-width: 50px;
+    padding: 1em 0 0 0;
+    /*margin: .1em .2em;    */
+    /*border: 0px;
+    /*float: right;*/
+}
+
+/*.logged-in .login-buttons-dropdown-align- {
+    position: relative;
+}
+*/
+.logged-in #login-buttons .login-link-and-dropdown-list {
+/*    position: relative;
+    left: -200px;
+*/    /*display: inline-block;*/
+    /*margin-right: 1em;*/
+}
+
+
+.logged-in h4 {
+   padding: 0;	
+   display: none;
+   margin: 0;
+  }
+
+.login-link-text {
+    color: transparent !important ;
+    font-size: 6px;
+    padding: 0;
+    margin: 0 !important;
+    line-height: 1em;
+    /*display: inline;*/
+    /*z-index: -10;*/
+}
+
 } /* @media (max-width: 500px) */  
 
 
@@ -622,3 +727,47 @@ svg > g > text[text-anchor="start"] {  /* heading */
 #reg-ben-charts div {
 	display: inline-block;
 }                 
+
+/*help page videos - make them responsive */
+
+#help-videos {
+	text-align: center;
+}
+
+.video-wrapper {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+	max-width: 800px;
+	margin: 0 auto;
+	overflow: hidden;
+	/*width: 90%;*/
+}
+.video-wrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 0 2% ;
+	width: 100%;
+	height: 100%;
+}
+
+.map-in-panel iframe {
+	margin: 2% 3% ;
+}
+
+.map-section {
+  text-align: center;
+  background: #FAFAFA ;
+  width: 100%;
+  margin: 0 0;
+   }
+.map-container {
+  text-align: center;
+  width: 90%;
+  height: 800px;
+  max-width: 800px;
+  margin: 0 auto ;
+  overflow: hidden;
+}

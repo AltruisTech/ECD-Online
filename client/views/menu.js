@@ -9,7 +9,7 @@ Template.menu.onCreated(function () {
 
 //Set up basic DIY ScrollMagic:
 // console.log(Router.current().route.getName()) ;
-
+ 
   scrollWin = function (selector) {
       $('html, body').animate({
       scrollTop: $(selector).offset().top
@@ -17,12 +17,11 @@ Template.menu.onCreated(function () {
     }
     
     $("[href^=#]").click(function(e) {
-     // e.preventDefault(); //prevent the "normal" behaviour which would be a "hard" jump. Not needed in this script?
+     e.preventDefault(); // prevent the "normal" behaviour which would would add the #path suffix to the URL, so best prevented
       scrollWin ($(this).attr("href"));
       // return false; // this appears to not append the #target to href 
   });  // click(function(e)
     
-
 goBackToList = function() {  // resets all form display session variables
             Session.get("selectedOFSId") ? Session.set("formsToDisplay", "OFSSelected") : Session.set("formsToDisplay", "OFSListed");
             Session.set("isOFSListed", true);
@@ -47,12 +46,13 @@ Template.menu.helpers({
   pageTitlefromRoute: function() {
 // zimme:active-route : Returns true if current route's path is '/'.
     if (ActiveRoute.path('/') ) { return "Home" } ; 
-    if (ActiveRoute.path('/staff') ) { return "Staff" } ; 
-    if (ActiveRoute.path('/facility') ) { return "Facility" } ; 
-    if (ActiveRoute.path('/service') ) { return "Service" } ; 
-    if (ActiveRoute.path('/organisation') ) { return "Organisation" } ; 
-    if (ActiveRoute.path('/loadData') ) { return "Test data loading" } ;
-    if (ActiveRoute.path('/reporting') ) { return "Reporting tables" } ;
+    if (ActiveRoute.name('staff') ) { return "Staff" } ; 
+    if (ActiveRoute.name('facility') ) { return "Facility" } ; 
+    if (ActiveRoute.name('service') ) { return "Service" } ; 
+    if (ActiveRoute.name('organisation') ) { return "Organisation" } ; 
+    if (ActiveRoute.name('loadData') ) { return "Test data loading" } ;
+    if (ActiveRoute.name('reporting') ) { return "Reporting tables" } ;
+    if (ActiveRoute.name('help') ) { return "Help" } ;
   }
 
 });
@@ -60,14 +60,20 @@ Template.menu.helpers({
 Template.menu.events({   
    "click .advanced-nav li": function(e) { 
     Session.set("formsToDisplay", "OFSListed");
-    progressBarUpdate(1); // Takes progress back to "Select from list"
+    if (typeof progressBarUpdate !== 'undefined') { progressBarUpdate(1) } ;// Takes progress back to "Select from list" 
    },
+});
+
+Template.progressBar.onRendered(function () {
+  // var self = this;
+  // self.autorun(function () {
+$('[data-toggle="tooltip"]').tooltip(); 
+   // },
 });
 
 Template.progressBar.onCreated(function () {
   var self = this;
   self.autorun(function () {
-
 progressBarUpdate = function(stepClicked) {
 for (var i = 1; i <= 8; i++) {
   selector = '#prog-'+ i +'-select li'; 
@@ -87,15 +93,15 @@ for (var i = 1; i <= 8; i++) {
     $(selector).removeClass('visited active next previous');
     }
   }  // for
-   //  if (ActiveRoute.path('/service') ) { 
-   //     Meteor.setTimeout(function(){addClassesService();}, 500);
-   // }    else 
-   if (ActiveRoute.path('/facility') ) { 
-       Meteor.setTimeout(function(){addClassesFacility();}, 500);
-   } else if (ActiveRoute.path('/organisation') )  { 
-       Meteor.setTimeout(function(){addClassesOrganisation();}, 500);
-   } else if (ActiveRoute.path('/staff') ) { 
-       Meteor.setTimeout(function(){addClassesStaff();}, 500);
+    if (ActiveRoute.name('service') ) {  
+       Meteor.setTimeout(function(){addClassesService();}, 200);
+   }    else 
+   if (ActiveRoute.name('facility') ) { 
+       Meteor.setTimeout(function(){addClassesFacility();}, 200);
+   } else if (ActiveRoute.name('organisation') )  { 
+       Meteor.setTimeout(function(){addClassesOrganisation();}, 200);
+   } else if (ActiveRoute.name('staff') ) { 
+       Meteor.setTimeout(function(){addClassesStaff();}, 200);
    } 
 }; // fn
 
@@ -116,7 +122,8 @@ Template.progressBar.events({
      if (Session.get("selectedOFSId")) 
        {  Session.set("formsToDisplay", "OFSSelected");
          progressBarUpdate(2);  // moves it on to "Edit Form"
-         scrollWin('#form-cont-services') ;
+       //   e.preventDefault(), // this is prevents the #path suffix being added to the URL
+       //   scrollWin('#form-cont-services') ;
        }
      else { alert("You must select a service row before you can edit it");
      } // else
@@ -151,3 +158,11 @@ Template.progressBar.events({
     // scrollWin('#form-cont-services');
    }
  });
+
+
+Template.footer.events({
+   "click #return-to-top a":function(e){
+       e.preventDefault(), // this is prevents the #path suffix being added to the URL
+      scrollWin("#advanced-nav ");
+      }
+  });

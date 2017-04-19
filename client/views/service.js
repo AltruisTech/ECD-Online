@@ -7,13 +7,21 @@
 Template.registerHelper("Collections", Collections);
 // Template.registerHelper("Schemas", Schemas);
 
-Template.service.onCreated(function () {
+Template.service.onCreated(function(){
+  if(Session.equals("formsToDisplay", "OFSSelected") | Session.equals("formsToDisplay", "OFSAddNew"))
+    { var e= Collections.Service.findOne({"mainDetails.serviceID": Session.get("selectedOFSId")});
+       Session.set("selectedOFSName", e.mainDetails.servName),
+    progressBarUpdate(2) ; // moves it on to "Edit Form" AND calls addClassesOrganisation
+ }
+}) ;
+
+Template.service.onRendered(function () {
   var self = this;
   self.autorun(function () {
-    Session.set("formsToDisplay", "OFSListed");
-    AutoForm.resetForm('service1') ;
-    AutoForm.resetForm('service4') ;  
 
+    // Session.set("formsToDisplay", "OFSListed");
+    // AutoForm.resetForm('service1') ;
+    // AutoForm.resetForm('service4') ;  
 
   addClassesService = function () {
   console.log('ran: addClassesService');
@@ -37,7 +45,10 @@ Template.service.onCreated(function () {
     $(" .panel-title:contains('External funders') i"     ).addClass("fa fa-sign-in"           ); 
     $(" .panel-title:contains('Nutrition') i"            ).addClass("fa fa-cutlery"           ); 
     $(" .panel-title:contains('Stimulation') i"          ).addClass("fa fa-coffee"            ); 
-    $(" .panel-title:contains('Service quality') i"      ).addClass("fa fa-thumbs-up"         ); 
+    $(" .panel-title:contains('Record keeping') i"      ).addClass("fa fa-pencil-square-o"     ); 
+    $(" .panel-title:contains('Policies and') i"         ).addClass("fa fa-hand-pointer-o"    ); 
+    $(" .panel-title:contains('Additional services') i"  ).addClass("fa fa-calendar-plus-o"   ); 
+    $(" .panel-title:contains('Profile completion') i"   ).addClass("fa fa-check-square-o"    ); 
 
     // $(" .panel-title:contains('Main details') i"         ).addClass("fa fa-info-circle"       ); 
     $(" .panel-title:contains('Qualifications') i"       ).addClass("fa fa-graduation-cap"    ); 
@@ -65,6 +76,38 @@ Template.service.helpers({
     isOFSSelected: () => Session.equals("formsToDisplay", "OFSSelected") | Session.equals("formsToDisplay", "OFSAddNew"),
     isQECDSelected: () => Session.equals("formsToDisplay", "QECDSelected"),
     isOFSFacSelected: () => Session.equals("formsToDisplay", "OFSFacSelected"),
+
+settingsOFSMerged: function() {
+        return {
+            collection: Collections.OFSMergedView,
+            showFilter: false,
+            showColumnToggles: true,
+            showNavigation: 'auto',
+        fields: [
+{key: "servName",              label:"Service Name (click to view)", hidden:1,
+fn: function(e,t ){ return new Spacebars.SafeString('<a name="'+e+'" class="edtlnk" target="_blank" title="Click to open a new tab with the selected service`s details" href="../service/'+t.orgID+'">'+e+"</a>")} },
+{key: "orgID",                 label:"Provided by Org (click to view):",
+fn: function(e){ return new Spacebars.SafeString('<a name="'+e+'" class="edtlnk" target="_blank" title="Click to open a new tab with the selected organisation`s details" href="../organisation/'+e+'">'+e+"</a>")} },
+{key: "servType",              label:"Service Type",             hidden:0},
+{key: "facName",               label:"Facility Name",            hidden:1},
+{key: "orgID",                 label:"At site ID (click to view)",sortByValue:0, 
+fn: function(e){ return new Spacebars.SafeString('<a name="'+e+'" class="edtlnk" target="_blank" title="Click to open a new tab with the selected facility / site`s details" href="../facility/'+e+'">'+e+"</a>")} },
+{key: "facDistMuni",           label:"District Muni",            hidden:1},
+{key: "facLocalMuni",          label:"Local Muni"                         },
+{key: "facWard",               label:"Ward"                               },
+{key: "facCityVillage",        label:"City / Village"                     },
+{key: "facGPSCoords",          label:"GPS",                      hisdden:1},
+{key: "facPCRStatus",          label:"PCR Status",               hidden:1},
+{key: "orgNumBeneficiaries",   label:"No. of Benefi-ciaries"              },
+{key: "subsidisedRatio",       label:"Subsidy Ratio"                      },
+{key: "staffCount",            label:"Staff Count (click to view):",
+fn: function(e,t){ return new Spacebars.SafeString('<a name="'+e+'" class="edtlnk" target="_blank" title="Click to open a new tab with the selected organisation`s staff" href="../staff/'+t.orgID+'">'+e+"</a>")} },
+{key: "staffQual",             label:"Staff Quali-fied Ratio"             },
+{key: "staffFull",             label:"Staff Full-time Ratio",    hidden:1},
+{key: "flags",                 label:"Issue flags"                        }
+          ] 
+        };
+    },
 
     settingsOFSTable: function() {
         return {

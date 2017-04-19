@@ -5,15 +5,45 @@ Also adds the loadData template to call the loadCsvData helpers to load test dat
 
 <template name="homeContent">
 
-  <div>  row 
-    <p> <strong> Select an icon in the top menu bar to search, view or edit data for: <br> - <i class="fa fa-wrench"></i> Service, <i class="fa fa-group"></i> Organisation, <i class="fa fa-home"></i> Facility, or <i class="fa fa-user"></i> Staff. </strong>     </p> 
+  <div>  <!-- row --> 
+    <!-- <p> <strong> Select an icon in the top menu bar to search, view or edit data for: <br> - <i class="fa fa-cog"></i> Service, <i class="fa fa-group"></i> Organisation, <i class="fa fa-map-marker"></i> Facility, or <i class="fa fa-user"></i> Staff. </strong>     </p>  -->
     <!-- <br> <br>     This page will soon include: <br> - data search options to select the data to view <br> -->
-  </div>  <!-- .row  #homeContent-->
 
-{{#if true}} 
-  <div class="header-title">
-      <h1>Status Dashboard</h1> 
- </div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="XXactive"><a href="#tab-search-select" aria-controls="tab-search-select" role="tab" data-toggle="tab">Search and select data</a></li>
+    <li role="presentation" class="active"><a href="#tab-search-map" aria-controls="tab-search-map" role="tab" data-toggle="tab">Map search</a></li>
+    <li role="presentation"><a href="#tab-dashboard" aria-controls="tab-dashboard" role="tab" data-toggle="tab">Dashboard</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane" id="tab-search-select">
+      <div class="table-container" id="table-ofs-merged">
+          <h1 class="header-title">Search and select data for:<br><b>Services</b> <i>provided by</i> <b>Organisations</b> <i>at</i> <b>Sites</b> <i>by</i> <b>Staff</b></h1>
+        <!-- <h2 class="table-heading">Search and select data for: <b>Services</b> <i>provided by</i> <b>Organisations</b> <i>at</i> <b>Sites</b> <i>by</i> <b>Staff</b></h2> -->
+         {{> reactiveTable settings=settingsOFSMerged fields=fields class="table table-bordered table-striped table-hover" id="ofs-merged-table" }}
+      </div>   <!-- #table-ofs-merged -->
+    </div> <!-- tab-pane 1  -->
+
+    <div role="tabpanel" class="tab-pane active" id="tab-search-map">
+        <div class="map-section row">
+          <h1 class="header-title">ECD Site locations </h1>
+          <p> The pin colour code is based on number of "flagged issues": 
+              <br> >= 4 : red / 3: orange / 2: yellow / 1: blue / 0: green
+              <br> - click on the marker to view more details
+              </p>
+        <div class="map-container">
+          {{> googleMap name="searchMap" options=searchMapOptions}}
+          </div> <!-- map-container -->
+          <br><br>
+        </div> map-section
+    </div> <!-- tab-pane 2  -->
+
+    <div role="tabpanel" class="tab-pane" id="tab-dashboard">
+  <!-- <div class="header-title"> -->
+      <h1 class="header-title">Status Dashboard</h1> 
+ <!-- </div> -->
 
  <div class='container' id='main-container'>
 
@@ -51,19 +81,44 @@ Also adds the loadData template to call the loadCsvData helpers to load test dat
                   </div>
               </a>
   </div>
- </div> <!-- row -->   
+  </div> <!-- row -->   
 
- </section>
-<!-- From: CxFilter-DC.html : -->
-
-
-
-  </div> <!-- container -->
-{{/if }}  <!-- true/false -->
+  </section>
+  </div> <!-- container #main-container for charts  -->
  
+ </div> <!-- tab-pane 3 tab-dashboard  -->
+
+ </div>  <!-- tab-content -->
+
+</div>  <!-- .row  #homeContent-->
+
 </template>  <!-- homeContent -->
 
+<!-- ///////////////////////////////////////////// -->  
 
+<template name="helpContent">
+
+<div id="help-videos">
+  
+<h3 class="table-heading">3 Minute app tour</h3>
+<article id="intro-video-large" class="help-video video-wrapper">
+           <iframe width="560" height="315" src="//www.youtube.com/embed/sR24YZGRq_s?&amp;showinfo=1" frameborder="1" allowfullscreen=""></iframe>     
+ </article>
+
+  <h3 class="table-heading"><br>Background to the project</h3>
+  <article id="background-video-large" class="help-video video-wrapper">
+           <iframe width="560" height="315" src="//www.youtube.com/embed/44G9j91jiC8?&amp;showinfo=1" frameborder="1" allowfullscreen=""></iframe>     
+    </article>
+    
+    <h3 class="table-heading"><br>App features, 30s overview</h3>
+    <article id="quick-video-large" class="help-video video-wrapper">
+           <iframe width="560" height="315" src="//www.youtube.com/embed/T4y5cqWOkxs?&amp;showinfo=1" frameborder="1" allowfullscreen=""></iframe> 
+           <br>    
+    </article>  
+  </div> <!-- #help-videos -->
+</template>  <!-- helpContent -->
+
+<!-- ///////////////////////////////////////////// -->
 
 <template name="loadData">
 

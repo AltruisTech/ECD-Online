@@ -12,11 +12,10 @@ Template.loadData.events({
       // var service = this;
       e.preventDefault();
 
-    // var csvFileOFS   = "/data/OFS1_40.csv";
-    // var csvFileOther = "/data/Other1_40.csv";
-
-    var csvFileOFS   = "/data/OFS10_120.csv";
-    var csvFileOther = "/data/Other10_120.csv";
+    // var csvFileOFS   = "/data/OFS10_120.csv";
+    // var csvFileOther = "/data/Other10_120.csv";
+    var csvFileOFS   = "/data/OFS11_260.csv";
+    var csvFileOther = "/data/Other11_260.csv";
 
 var tableList = [ 'Organisation' , 'Facility', 'ServiceQualityECD', 'FacilityQualityECD' ,'Service', 'Staff', 'ServBeneficiaryGroup' ] ;
 
@@ -31,6 +30,18 @@ if (r == true) {
 var cleanString = function(string){ // to santise cel numbers and ID numbers
      if ( string != null ) { 
          var newString = string.replace(/9/g,"3").replace(/8/g,"6").replace(/2/g,"7").replace(/5/g,"2").replace(/1/g,"8").replace(/2/g,"7");
+      return newString;
+        } 
+      else { return ""; }
+  };
+
+String.prototype.capitalise = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+var cleanName = function(string){ // to clean up typos in municipality or other place names
+     if ( string != null ) { 
+         var newString = string.replace(/Umziwabantu/g,"Umuziwabantu").replace(/Umuziwabant/g,"Umuziwabantu").replace(/Umuziwabantuu/g,"Umuziwabantu").replace(/ $/g,"").capitalise(); 
       return newString;
         } 
       else { return ""; }
@@ -96,24 +107,24 @@ var insertOrg =  {
   "orgNPORegDate" : csvData.orgNPORegDate,
   "orgNPONum" : csvData.orgNPONum
     },
-    "staffContact" : {
-  "orgPrimaryStaffContactName" : cleanString(csvData.orgPrimaryStaffContactName),
-  "orgPrimaryStaffContactCell" : cleanString(csvData.orgPrimaryStaffContactCell),
-  "orgLandline" : csvData.orgLandline,
-  "orgEmail" : csvData.orgEmail,
-  "orgPostalAddress1" : csvData.orgPostalAddress1,
-  "orgPostalAddress2" : csvData.orgPostalAddress2,
-  "orgPostalCode" : csvData.orgPostalCode
+    "primaryContacts" : {
+  "orgPrimaryStaffContactName" : csvData.orgPrimaryStaffContactName.shuffle(),
+  "orgPrimaryStaffContactCell" : csvData.orgPrimaryStaffContactCell.shuffle(),
+  "orgPrimaryCommitteeContactName" : csvData.orgPrimaryCommitteeContactName.shuffle(),
+  "orgPrimaryCommitteeContactCell" : csvData.orgPrimaryCommitteeContactCell.shuffle()
     },
-    "commiteeContact" : {
-  "orgPrimaryCommitteeContactName" : csvData.orgPrimaryCommitteeContactName,
-  "orgPrimaryCommitteeContactCell" : cleanString(csvData.orgPrimaryCommitteeContactCell),
+    "organisationContact" : {
   "orgWebsite" : csvData.orgWebsite,
   "orgFax" : csvData.orgFax,
   "orgPhysicalAddress1" : csvData.orgPhysicalAddress1,
   "orgPhysicalAddress2" : csvData.orgPhysicalAddress2,
   "orgCityVillage" : csvData.orgCityVillage,
-  "orgLocalMuni" : csvData.orgLocalMuni
+  "orgLocalMuni" : csvData.orgLocalMuni,
+  "orgLandline" : csvData.orgLandline,
+  "orgEmail" : csvData.orgEmail,
+  "orgPostalAddress1" : csvData.orgPostalAddress1,
+  "orgPostalAddress2" : csvData.orgPostalAddress2,
+  "orgPostalCode" : csvData.orgPostalCode
     },
     "governance" : {
   "orgManagementCommitteeExists" : csvData.orgManagementCommitteeExists,
@@ -123,13 +134,13 @@ var insertOrg =  {
   "orgManComMeetingsinLastYear" : +csvData.orgManComMeetingsinLastYear,
   "orgManComTraining" : csvData.orgManComTraining
     },
-    "managementCommittee" : {
-  "orgMCOffice" : csvData.orgMCOffice,
-  "orgMCName" : csvData.orgMCName,
-  "orgMCOccupation" : csvData.orgMCOccupation,
-  "orgMCAddress" : csvData.orgMCAddress,
-  "orgMCCell" : cleanString(csvData.orgMCCell)
-    },
+  //   "managementCommittee" : {
+  // "orgMCOffice" : csvData.orgMCOffice,
+  // "orgMCName" : csvData.orgMCName,
+  // "orgMCOccupation" : csvData.orgMCOccupation,
+  // "orgMCAddress" : csvData.orgMCAddress,
+  // "orgMCCell" : csvData.orgMCCell.shuffle()
+  //   },
     "financialManagement" : {
   "orgBankAccount" : csvData.orgBankAccount,
   "orgBankAccountHolder" : csvData.orgBankAccountHolder,
@@ -144,9 +155,10 @@ var insertOrg =  {
 
     "location" : {
   "facID" : +csvData.orgID + 1000,
-  "facName" : csvData.facName,
+  // "facName" : csvData.facName,  NB NB NB NB NB NB NB NB NB NB TEMP STEP - borrow orgName:
+  "facName" : csvData.orgName,  
   "facDistMuni" : csvData.facDistMuni,
-  "facLocalMuni" : csvData.facLocalMuni,
+  "facLocalMuni" : cleanName(csvData.facLocalMuni),
   "facWard" : csvData.facWard,
   "facTradAuth" : csvData.facTradAuth,
   ///////// NB below 6 coped from Org data as dropped from spreadsheet:
@@ -194,6 +206,7 @@ var insertOrg =  {
   "facLandAllocated" : csvData.facLandAllocated,
   "facLandAllocatedTo" : csvData.facLandAllocatedTo,
   "facGPSCoords" : csvData.facGPSCoords,
+  "facGeoType" : csvData.servGeoType,
   "facPropertySize" : +csvData.facPropertySize,
   "facSlope" : csvData.facSlope,
   "facBuildingSize" : +csvData.facBuildingSize,
@@ -205,6 +218,7 @@ var insertOrg =  {
 
     "mainDetails" : {
   "serviceID" : +csvData.orgID + 1000,
+  // "servName" : csvData.servName,  NB NB NB NB NB NB NB NB NB NB TEMP STEP - borrow orgName:
   "servName" : csvData.orgName,
   "servType" : csvData.servType
     },
@@ -269,7 +283,7 @@ var insertOrg =  {
   "servChartsUsed" : csvData.servChartsUsed,
   "servThemesUsed" : csvData.servThemesUsed
     },
-    "serviceQualityB" : {
+    "recordKeeping" : {
   "servStaffRegister" : stringToBoolean(csvData.servStaffRegister),
   "servChildrensFiles" : stringToBoolean(csvData.servChildrensFiles),
   "servIncidentAbuseRegister" : stringToBoolean(csvData.servIncidentAbuseRegister),
@@ -284,7 +298,7 @@ var insertOrg =  {
   "servEnrollSpecialNeedsAllergies" : stringToBoolean(csvData.servEnrollSpecialNeedsAllergies),
   "servEnrollImmunisationRecords" : stringToBoolean(csvData.servEnrollImmunisationRecords)
     },
-    "serviceQualityC" : {
+    "policiesAndProcedures" : {
   "servDisciplinePolicy" : stringToBoolean(csvData.servDisciplinePolicy),
   "servTransportPolicy" : stringToBoolean(csvData.servTransportPolicy),
   "servDisabilityPolicy" : stringToBoolean(csvData.servDisabilityPolicy),
@@ -295,11 +309,12 @@ var insertOrg =  {
   "servHealthHygieneStandards" : stringToBoolean(csvData.servHealthHygieneStandards),
   "servHealthStaffHealth" : stringToBoolean(csvData.servHealthStaffHealth)
     },
-    "serviceQualityD" : {
-  "servGeoType" : stringToBoolean(csvData.servGeoType),
+    "profileCompletionDetails" : {
   "servDateofProfileCompletion" : stringToBoolean(csvData.servDateofProfileCompletion),
   "servPersonRespForProfile" : stringToBoolean(csvData.servPersonRespForProfile),
-  "servNoOfChildrenOnInspectionDate" : +csvData.servNoOfChildrenOnInspectionDate,
+  "servNoOfChildrenOnInspectionDate" : +csvData.servNoOfChildrenOnInspectionDate
+    },
+   "additionalServicesOffered" : {
   "servLifeSkills" : stringToBoolean(csvData.servLifeSkills),
   "servAfterCare" : stringToBoolean(csvData.servAfterCare),
   "servHealthmonitoringSupport" : stringToBoolean(csvData.servHealthmonitoringSupport),
@@ -345,7 +360,9 @@ var insertFQ =  {
   "facTidyPremises" : csvData.facTidyPremises,
   "facFoodGarden" : csvData.facFoodGarden,
   "facPurchasesVegetables" : csvData.facPurchasesVegetables,
-  "facToysandResourcesStoredSafely" : csvData.facToysandResourcesStoredSafely
+  "facToysandResourcesStoredSafely" : csvData.facToysandResourcesStoredSafely,
+  "facSitePerimeterEnclosed" : csvData.facSitePerimeterEnclosed,
+  "facGate" : csvData.facGate
     },
     "equipment" : {
   "facWheelchairRamp" : csvData.facWheelchairRamp,
@@ -425,7 +442,7 @@ var insertFQ =  {
   "facKitchenHotWater" : csvData.facKitchenHotWater,
   "facKitchenAccess" : csvData.facKitchenAccess
     },
-    "office" : {
+    "officeAndSickbay" : {
   "facSickBaySeparate" : csvData.facSickBaySeparate,
   "facSickbayOfficeShared" : csvData.facSickbayOfficeShared,
   "facOfficeSpace" : csvData.facOfficeSpace,
@@ -465,8 +482,7 @@ var insertFQ =  {
   "facSandpit" : csvData.facSandpit,
   "facSlide" : csvData.facSlide,
   "facOutdoorEquipOther" : csvData.facOutdoorEquipOther,
-  "facOutdoorEquipIssues" : csvData.facOutdoorEquipIssues,
-  "facSitePerimeterEnclosed" : csvData.facSitePerimeterEnclosed
+  "facOutdoorEquipIssues" : csvData.facOutdoorEquipIssues
     },
     "outdoorsEquipment" : {
   "facOutdoorEquipRottenWood" : csvData.facOutdoorEquipRottenWood,
@@ -474,8 +490,7 @@ var insertFQ =  {
   "facOutdoorEquipSharpObjects" : csvData.facOutdoorEquipSharpObjects,
   "facOutdoorEquipUnsafeSeats" : csvData.facOutdoorEquipUnsafeSeats,
   "facOutdoorEquipTooHighNoRails" : csvData.facOutdoorEquipTooHighNoRails,
-  "facOutdoorEquipFrayedRopes" : csvData.facOutdoorEquipFrayedRopes,
-  "facGate" : csvData.facGate
+  "facOutdoorEquipFrayedRopes" : csvData.facOutdoorEquipFrayedRopes
     }
 } ;
   
@@ -513,7 +528,7 @@ var insertFQ =  {
   "staffID" : +csvData.staffID.shuffle(),
   "orgID" : +csvData.stafforgID + 1000,
   "staffName" : csvData.staffName.shuffle(),
-  // "staffIDNumber" : cleanString(csvData.staffIDNumber),
+  // "staffIDNumber" : csvData.staffIDNumber.shuffle(),
   "staffContactNumber" : csvData.staffContactNumber.shuffle(),
   "staffRace" : csvData.staffRace,
   "staffGender" : csvData.staffGender,
@@ -618,8 +633,8 @@ var insertFQ =  {
   "orgMCName" : csvData.orgMCName,
   "orgMCOccupation" : csvData.orgMCOccupation,
   "orgMCAddress" : csvData.orgMCAddress,
-  "orgMCCell" : cleanString(csvData.orgMCCell),
-  "orgMCIDNumber" : cleanString(csvData.orgMCIDNumber)
+  "orgMCCell" : csvData.orgMCCell.shuffle(),
+  "orgMCIDNumber" : csvData.orgMCIDNumber.shuffle()
     }
  };
 

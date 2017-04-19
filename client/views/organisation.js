@@ -2,9 +2,18 @@
 - \client\views\*.js files are to define helper functions and event handlers for the template deffined with the same name (.html)
 *************************************************************/
 
-Template.organisation.onCreated(function () {
-    Session.set("formsToDisplay", "OFSListed");
- });
+// Template.organisation.onCreated(function () {
+//     Session.set("formsToDisplay", "OFSListed");
+//  });
+
+Template.organisation.onCreated(function(){
+  if(Session.equals("formsToDisplay", "OFSSelected") | Session.equals("formsToDisplay", "OFSAddNew"))
+    { var e= Collections.Organisation.findOne({"mainDetails.orgID": Session.get("selectedOFSId")});
+       Session.set("selectedOFSName", e.mainDetails.orgName)
+    // , progressBarUpdate(2) ; // moves it on to "Edit Form" AND calls addClassesOrganisation
+ }
+}) ;
+
 
 Template.organisation.onRendered(function () {
   var self = this;
@@ -18,8 +27,8 @@ Template.organisation.onRendered(function () {
     // add fa icons to each panel title > i based on the text:
     $( ".panel-title" ).prepend("<i> </i>")
     $(" .panel-title:contains('Main details') i"         ).addClass("fa fa-info-circle"       ); 
-    $(" .panel-title:contains('Staff contact') i"        ).addClass("fa fa-phone"             ); 
-    $(" .panel-title:contains('Commitee contact') i"     ).addClass("fa fa-slideshare"        ); 
+    $(" .panel-title:contains('Primary contacts') i"     ).addClass("fa fa-phone"             ); 
+    $(" .panel-title:contains('Organisation contact') i" ).addClass("fa fa-slideshare"        ); 
     $(" .panel-title:contains('Services provided') i"    ).addClass("fa"                      ); 
     $(" .panel-title:contains('Governance') i"           ).addClass("fa fa-institution"       ); 
     $(" .panel-title:contains('Management committee') i" ).addClass("fa fa-group"             ); 
@@ -36,6 +45,38 @@ Template.organisation.helpers({
     isOFSSelected: () => Session.equals("formsToDisplay", "OFSSelected") | Session.equals("formsToDisplay", "OFSAddNew"),
     isQECDSelected: () => Session.equals("formsToDisplay", "QECDSelected"),
     isOFSFacSelected: () => Session.equals("formsToDisplay", "OFSFacSelected"),
+
+settingsOFSMerged: function() {
+        return {
+            collection: Collections.OFSMergedView,
+            showFilter: false,
+            showColumnToggles: true,
+            showNavigation: 'auto',
+        fields: [
+{key: "servName",              label:"Service Name (click to view)",
+fn: function(e,t ){ return new Spacebars.SafeString('<a name="'+e+'" class="edtlnk" target="_blank" title="Click to open a new tab with the selected service`s details" href="../service/'+t.orgID+'">'+e+"</a>")} },
+//  {key: "orgID",                 label:"Provided by Org (click to view):",
+// fn: function(e){ return new Spacebars.SafeString('<a name="'+e+'" class="edtlnk" target="_blank" title="Click to open a new tab with the selected organisation`s details" href="../organisation/'+e+'">'+e+"</a>")} },
+{key: "servType",              label:"Service Type",             hidden:0},
+{key: "facName",               label:"Facility Name",            hidden:1},
+{key: "orgID",                 label:"At site ID (click to view)",sortByValue:0, 
+fn: function(e){ return new Spacebars.SafeString('<a name="'+e+'" class="edtlnk" target="_blank" title="Click to open a new tab with the selected facility / site`s details" href="../facility/'+e+'">'+e+"</a>")} },
+{key: "facDistMuni",           label:"District Muni",            hidden:1},
+{key: "facLocalMuni",          label:"Local Muni"                         },
+{key: "facWard",               label:"Ward"                               },
+{key: "facCityVillage",        label:"City / Village"                     },
+{key: "facGPSCoords",          label:"GPS",                      hidden:1},
+{key: "facPCRStatus",          label:"PCR Status",               hidden:1},
+{key: "orgNumBeneficiaries",   label:"No. of Benefi-ciaries"              },
+{key: "subsidisedRatio",       label:"Subsidy Ratio"                      },
+{key: "staffCount",            label:"Staff Count (click to view):",
+fn: function(e,t){ return new Spacebars.SafeString('<a name="'+e+'" class="edtlnk" target="_blank" title="Click to open a new tab with the selected organisation`s staff" href="../staff/'+t.orgID+'">'+e+"</a>")} },
+{key: "staffQual",             label:"Staff Quali-fied Ratio"             },
+{key: "staffFull",             label:"Staff Full-time Ratio",    hidden:1},
+{key: "flags",                 label:"Issue flags"                        }
+          ] 
+        };
+    },
 
     settingsOFSTable: function() {
         return {
@@ -74,23 +115,9 @@ Template.organisation.helpers({
 
 Template.organisation.events({   
    'click #service-table tbody tr': function(e) {
-        // if ($(e.target).hasClass('edtlnk')) {
             var OFSSelectedRow = this;
             e.preventDefault();
-            Session.set("formsToDisplay", "OFSSelected");
-            Session.set("selectedOFSId", OFSSelectedRow.mainDetails.orgID);
-            Session.set("selectedOFSName", OFSSelectedRow.mainDetails.orgName);
-            $('#service-table tr').removeClass('row-selected');
-            $(e.target).parent().addClass('row-selected');
-            // AutoForm.resetForm('service1') ;
-                document.getElementById("serviceId") ? document.getElementById("serviceId").value = OFSSelectedRow.mainDetails.orgID  : '' ;
-             progressBarUpdate(2);  // moves it on to "Edit Form"
-    $( ".form-inline").removeClass('form-group') ; 
-    // class parent form .panel for checkboxes differently
-         $( ".panel-title:contains('Org quality ')" ).parent().parent().addClass('checkbox-form'); 
-
         // }
-   },          
-     
+   }
 });
 

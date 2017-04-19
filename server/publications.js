@@ -4,7 +4,7 @@
 //   if (Roles.userIsInRole(this.userId, ['view-all','edit-all','admin'], group)) {
 //     return Collections.Service.find({});
 //     // return Collections.Service.find({group: group}); 
-//   } else { this.stop(); return; }
+//   } else { this.stop(); return; } 
 // });
 
 guestRowLimit = 10 ;
@@ -30,6 +30,18 @@ Meteor.publish('servBeneficiaryGroup', function(id) {
 
 Meteor.publish('servBeneficiaryGroupRep', function(id) {
   return Collections.ServBeneficiaryGroupRep.find({ orgID: id });
+});
+
+Meteor.publish('ofsMergedView', function () {
+var userRegionGroups = Roles.getGroupsForUser(this.userId, 'view-region' ) ; 
+  if (Roles.userIsInRole(this.userId, viewAllDataRoles, viewAllDataGroup  )) { return Collections.OFSMergedView.find({});
+  } else if (userRegionGroups && userRegionGroups.length > 0 ) { 
+    return Collections.OFSMergedView.find({ "facLocalMuni" : { $in: userRegionGroups } } ) ;
+  } else { return Collections.OFSMergedView.find({}, { limit: guestRowLimit }) ;}
+});
+
+Meteor.publish('ofsMergedViewID', function(id) {
+  return Collections.OFSMergedView.find({ orgID: id });
 });
 
 Meteor.publish('facility', function () {

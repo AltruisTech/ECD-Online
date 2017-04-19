@@ -19,7 +19,7 @@ Also inlcudes the "ECD-Online app: " header on each page
                             </a>
                           </li>
             <li class="{{isActiveRoute regex='/'}} menu-active" >
-                            <a href="/">
+                            <a href="/"  title="Back to the home / search page">
                                 <div class="icon">
                                     <i class="fa fa-home"></i>
                                 </div>
@@ -29,10 +29,10 @@ Also inlcudes the "ECD-Online app: " header on each page
                             </a>
                         </li>
     <!--  ##### menu item separator ##### -->
-            <li class="{{isActiveRoute regex='service'}} menu-active" >
-                            <a href="/service">
+            <li class="{{isActiveRoute regex='service'}} menu-active menu-lose" >
+                            <a href="/service/*" title="Services: select, view or edit">
                                 <div class="icon">
-                                    <i class="fa fa-wrench"></i>
+                                    <i class="fa fa-cog fa-spin"></i>
                                 </div>
                                 <div class="button-text">
                             Srv <span>..Services: select, view or edit</span>
@@ -40,8 +40,8 @@ Also inlcudes the "ECD-Online app: " header on each page
                             </a>
                         </li>
     <!--  ##### menu item separator ##### -->
-            <li class="{{isActiveRoute regex='organisation'}} menu-active" >
-                            <a href="/organisation">
+            <li class="{{isActiveRoute regex='organisation'}} menu-active menu-lose " >
+                            <a href="/organisation/*" title="Organisation: select, view or edit">
                                 <div class="icon">
                                     <i class="fa fa-group"></i>
                                 </div>
@@ -51,8 +51,8 @@ Also inlcudes the "ECD-Online app: " header on each page
                             </a>
                         </li>
     <!--  ##### menu item separator ##### --> 
-            <li class="{{isActiveRoute regex='facility'}} menu-active" >
-                            <a href="/facility">
+            <li class="{{isActiveRoute regex='facility'}} menu-active menu-lose"  >
+                            <a href="/facility/*" title="Facility: select, view or edit">
                                 <div class="icon">
                                     <i class="fa fa-map-marker"></i>
                                 </div>
@@ -63,7 +63,7 @@ Also inlcudes the "ECD-Online app: " header on each page
                         </li>
     <!--  ##### menu item separator ##### --> 
             <li class="{{isActiveRoute regex='staff'}} menu-active" >
-                            <a href="/staff">
+                            <a href="/staff/*" title="Staff: select, view or edit">
                                 <div class="icon">
                                     <i class="fa fa-user"></i>
                                 </div>
@@ -72,20 +72,33 @@ Also inlcudes the "ECD-Online app: " header on each page
                                 </div>
                             </a>
                         </li>
-          <li class="login-box">
+            <li class="{{isActiveRoute regex='help'}} menu-active" >
+                            <a href="/help" title="Help: getting started videos and more">
+                                <div class="icon">
+                                    <i class="fa fa-question-circle"></i>
+                                </div>
+                                <div class="button-text">
+                            Help <span>..Help: getting started</span>
+                                </div>
+                            </a>
+     </li>
              <!-- {{#if isInRole 'view-all,edit-all,admin,guest'}} -->
              {{#if currentUser}}
-             <div id="login-buttons" class="login-buttons-dropdown-align-left">
+           <li class="login-box logged-in">
+             <div id="login-buttons" class="login-buttons-dropdown-align-right">
+              <i class="fa fa-unlock"></i>
               <h4>Welcome,</h4>
                   {{> loginButtons}} 
               </div>
+             </li>
              {{else}}
+          <li class="login-box">
              <div id="login-buttons" class="login-buttons-dropdown-align-right">
                  <h4 id="zz" style="text-align: center; color: red">User login required:</h4>
                   {{> loginButtons}}   
               </div>
-            {{/if}} <!-- isInRole -->
           </li>
+            {{/if}} <!-- isInRole -->
 
                     </ul>
                 </nav><!-- #advanced-nav .advanced-nav -->
@@ -93,8 +106,9 @@ Also inlcudes the "ECD-Online app: " header on each page
 <!--  <p style="text-align: center">(Each menu item above will be a page link, though not yet linked up..)</p> -->
 
    <div class="header-title">
-        <h1>ECD-Online app: {{pageTitlefromRoute}} page</h1> 
-             {{#unless currentUser}}
+        <h1>ECD-Online: {{pageTitlefromRoute}} page</h1> 
+         {{#unless currentUser}}
+             {{#unless isActiveRoute regex='help'}}
                  <h4 style="text-align: center; color: red">User login required (top right), or page below will be blank. </h4> 
                  <br> 
         <div id="header-image" class="header-image">
@@ -102,7 +116,8 @@ Also inlcudes the "ECD-Online app: " header on each page
            <img src="/images/NAG_LOGO_medium.png">  </a>  
            <br>        
         </div>
-       {{/unless}} <!-- isInRole -->
+         {{/unless}} <!-- isInRole -->
+       {{/unless}} <!-- currentUser -->
           </div>
 
 </template>  <!-- menu -->

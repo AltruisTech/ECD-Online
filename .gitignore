@@ -8,6 +8,7 @@ public/data
 client/modules
 .bkps/
 both/collections/.bkps
+.*.txt
 .*.js
 .*.css
 .*.html

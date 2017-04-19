@@ -2,95 +2,90 @@
 
  <!-- {{#if Template.subscriptionsReady}} -->
 
-
- <div class="panel-group" id="accordion">
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
 <!-- Collapse 1: Text Report 01 -->
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" role="tab" id="acc-heading-one">
       <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="">Dashboard 01: PCR registration status by municipality </a>
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-one" aria-expanded="false" aria-controls="collapse-one"> Dashboard 01: PCR registration status by municipality </a>
       </h4>
     </div>
-    <div id="collapse1" class="panel-collapse collapse in">
+    <div id="collapse-one" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="acc-heading-one">
       <div class="panel-body">
- <div class="table-container" id="table-cont-services">
-     {{> reactiveTable settings=settingsRep01 fields=fields class="table table-bordered table-striped table-hover" id="Rep01-table" }}
-</div>   
+         <div class="table-container" id="table-cont-services">
+             {{> reactiveTable settings=settingsRep01 fields=fields class="table table-bordered table-striped table-hover" id="Rep01-table" }}
+         </div>   
       </div>
-<!--       <div class="panel-footer">Click the below panel for the next report</div -->>
-    </div>
-  </div>
+    </div> <!-- collapse-one-->
+  </div>  <!-- panel-default #1 -->
 
+  
  <!-- Collapse 2: Text Report 02 -->
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" role="tab" id="acc-heading-two">
       <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="">Dashboard 02: Staff training Needs by Local Municipality</a>
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-two" aria-expanded="false" aria-controls="collapse-two"> Dashboard 02: Staff training Needs by Local Municipality</a>
       </h4>
     </div>
-    <div id="collapse1" class="panel-collapse collapse in">
+    <div id="collapse-two" class="panel-collapse collapse" role="tabpanel" aria-labelledby="acc-heading-two">
       <div class="panel-body">
- <div class="table-container" id="table-cont-services">
-     {{> reactiveTable settings=settingsRep02 fields=fields class="table table-bordered table-striped table-hover" id="Rep02-table" }}
-</div>   
+         <div class="table-container" id="table-cont-services">
+       {{> reactiveTable settings=settingsRep02 fields=fields class="table table-bordered table-striped table-hover" id="Rep02-table" }}
+         </div>   
       </div>
-    </div>
-  </div>
+    </div> <!-- collapse-two-->
+  </div>  <!-- panel-default #2 -->
 
 <!-- Collapse 3: Text Report 03 -->
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" role="tab" id="acc-heading-three">
       <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="">Dashboard 03: ECD Sites Requiring Basic Services </a>
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-three" aria-expanded="false" aria-controls="collapse-three"> Dashboard 03: ECD Sites Requiring Basic Services </a>
       </h4>
     </div>
-    <div id="collapse1" class="panel-collapse collapse in">
+    <div id="collapse-three" class="panel-collapse collapse" role="tabpanel" aria-labelledby="acc-heading-three">
       <div class="panel-body">
- <div class="table-container" id="table-cont-services">
+         <div class="table-container" id="table-cont-services">
      {{> reactiveTable settings=settingsRep03 fields=fields class="table table-bordered table-striped table-hover" id="Rep03-table" }}
-</div>   
+         </div>   
       </div>
-    </div>
-  </div>
+    </div> <!-- collapse-three-->
+  </div>  <!-- panel-default #3 -->
 
 <!-- Collapse 4: Text Report 04 -->
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading" role="tab" id="acc-heading-four">
       <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="">Dashboard 04: Service beneficiary group totals by  Municipality </a>
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-four" aria-expanded="false" aria-controls="collapse-four">Dashboard 04: Service beneficiary group totals by  Municipality </a>
       </h4>
     </div>
-    <div id="collapse1" class="panel-collapse collapse in">
+    <div id="collapse-four" class="panel-collapse collapse" role="tabpanel" aria-labelledby="acc-heading-four">
       <div class="panel-body">
- <div class="table-container" id="table-cont-services">
+         <div class="table-container" id="table-cont-services">
      {{> reactiveTable settings=settingsRep04 fields=fields class="table table-bordered table-striped table-hover" id="Rep04-table" }}
-</div>   
+         </div>   
       </div>
-    </div>
-  </div>
+    </div> <!-- collapse-four-->
+  </div>  <!-- panel-default #4 -->
 
-        <div id="header-image" class="header-image">
-            <a href="http://www.nag.org.za/" title="Open the www.nag.org.za website" target="_blank">
-           <img src="/images/NAG_LOGO_medium.png">  </a>          
-        </div>
-   </div> <!-- .panel-group -->
+</div> <!-- .panel-group #accordion -->
+
+      <div id="header-image" class="header-image">
+          <!-- <a href="http://www.nag.org.za/" title="Open the www.nag.org.za website" target="_blank"> -->
+         <!-- <img src="/images/NAG_LOGO_medium.png">  </a>           -->
+      </div>
 
 </template> <!-- reporting -->
- 
+
+
+<!-- ///////////////////////////////////////////////////////////////////// -->
+<!-- ///////////////////////////////////////////////////////////////////// -->
+<!-- ///////////////////////////////////////////////////////////////////// -->
 
 <template name="reportingMovedToHome">
 
   {{#if false}} 
  <h2>CxFilter-DC testing</h2>
-
-
-<!--   <div id="chart-line-hitsperday"></div>
-  <div id="chart-ring-year"></div>
- -->
-<!-- <div id="bar-chart"></div>
-<div id="bar-chart-2"></div>
-<div id="row-chart"></div> -->
-<!-- <div id="pie-chart"></div> -->
 
 <div class="row">
   <div class="col-xs-12">

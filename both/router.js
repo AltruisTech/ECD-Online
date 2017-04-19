@@ -4,100 +4,156 @@
 *************************************************************/
 
 Router.configure({
-  layoutTemplate: 'layout'
-  ,   loadingTemplate: 'loading'
+  layoutTemplate: 'layout',
+  loadingTemplate: 'loading'
 });
-
 
 Router.route('/', {
   name: 'homeContent',
-  waitOn: function(){
-  return [
-  Meteor.subscribe('rep01RegisteredAndFundedECD'), 
-  Meteor.subscribe('rep02StaffTrainingNeeds'), 
-  Meteor.subscribe('rep03SitesRequiringBasicServices'),
-  Meteor.subscribe('rep04BeneficiaryGroupMuni')
-     ];
-   },
- action: function() {
-  this.render('homeContent');
-  }
+  waitOn: function () { return [
+      Meteor.subscribe('ofsMergedView'),
+      Meteor.subscribe('facility'),
+      Meteor.subscribe('rep01RegisteredAndFundedECD'),
+      Meteor.subscribe('rep02StaffTrainingNeeds'),
+      Meteor.subscribe('rep03SitesRequiringBasicServices'),
+      Meteor.subscribe('rep04BeneficiaryGroupMuni')
+      ];
+  },
 });
 
-Router.route('/service',  {
+Router.route('/help', {
+  name: 'helpContent'
+});
+
+Router.route('/service/:ServiceId', {
   name: 'service',
- waitOn: function() {
-  Session.setDefault("selectedOFSId", 1010);
-  var id = Session.get("selectedOFSId");
-  // console.log(Session.get("selectedOFSId"));
-  return [
-  Meteor.subscribe('service'),
-  // below 2 are now handled by the template view:
-  // Meteor.subscribe('servBeneficiaryGroup', id),
-  // Meteor.subscribe('servBeneficiaryGroupRep', id),
-  Meteor.subscribe('serviceQualityECD'),
-  // Meteor.subscribe('facility')
-     ]; 
-   }, // waitOn
-  action: function () {
-       this.next();
-       this.render('service');
-  } 
+  waitOn: function () { 
+      var params = this.params;
+      OFSId = parseInt(params.ServiceId);
+      return [ Meteor.subscribe('ofsMergedViewID', OFSId),
+      Meteor.subscribe('service', OFSId),
+      Meteor.subscribe('serviceQualityECD', OFSId),
+      Meteor.subscribe('servBeneficiaryGroupRep', OFSId),
+      Meteor.subscribe('servBeneficiaryGroup', OFSId)
+      ];
+ }, // waitOn
+  onAfterAction: function () {
+    function onAfterAction() {
+      if (String(OFSId) == '*') {
+        Session.set("formsToDisplay", "OFSListed");
+      } else {
+        Session.set("formsToDisplay", "OFSSelected");
+        Session.set("selectedOFSId", parseInt(OFSId));
+      }
+    }
+    return onAfterAction;
+  }()
 });
 
-
-Router.route('/organisation', function () {
-  this.render('organisation');
-	this.subscribe('organisation');
-  this.subscribe('facility');
+// given a url like "/organisation/1005"
+Router.route('/organisation/:OrgId', {
+  name: 'organisation',
+  waitOn: function () {
+      var params = this.params;
+      OFSId = parseInt(params.OrgId);
+      return [
+      Meteor.subscribe('ofsMergedViewID', OFSId),
+      Meteor.subscribe('organisation', OFSId)];
+  }, // waitOn
+  onAfterAction: function () {
+      if (OFSId == '*') {
+        Session.set("formsToDisplay", "OFSListed");
+      } else {
+        Session.set("formsToDisplay", "OFSSelected");
+        Session.set("selectedOFSId", parseInt(OFSId));
+      }
+    }
 });
 
-Router.route('/facility', function () {
-  this.render('facility');
-	this.subscribe('facility');
-	this.subscribe('facilityQualityECD');
+Router.route('/facility/:facId', {
+  name: 'facility',
+  waitOn: function () {
+    function waitOn() {
+      var params = this.params;
+      OFSId = parseInt(params.facId);
+      return [Meteor.subscribe('ofsMergedViewID', OFSId),
+      Meteor.subscribe('facility', OFSId),
+      Meteor.subscribe('facilityQualityECD', OFSId)];
+    }
+    return waitOn;
+  }(), // waitOn
+  onAfterAction: function () {
+    function onAfterAction() {
+      if (String(OFSId) == '*') {
+        Session.set("formsToDisplay", "OFSListed");
+      } else {
+        Session.set("formsToDisplay", "OFSSelected");
+        Session.set("selectedOFSId", parseInt(OFSId));
+      }
+    }
+    return onAfterAction;
+  }()
 });
 
-Router.route('/staff', function () {
-  this.render('staff');
-	this.subscribe('staff');
-  // temp additions to run the Papa.parse( ) readCSV.js data loads from ths template / route
-});
+Router.route('/staff/:OrgId', {
+  name: 'staff',
+  waitOn: function () {
+    function waitOn() {
+      var params = this.params;
+      OFSId = parseInt(params.OrgId);
+      return [
+      // Meteor.subscribe('ofsMergedViewID', OFSId),
+      Meteor.subscribe('staff', OFSId)];
+    }
+
+    return waitOn;
+  }() });
 
 Router.route('/loadData', {
   name: 'loadData',
- waitOn: function () {
-  return [
-  Meteor.subscribe('service'),
-  Meteor.subscribe('serviceQualityECD'),
-  Meteor.subscribe('facility'),
-  Meteor.subscribe('facilityQualityECD'),
-  Meteor.subscribe('organisation'),
-  // Meteor.subscribe('servBeneficiaryGroup'),
-  Meteor.subscribe('staff')
-     ]; 
-   }, // waitOn
+  waitOn: function () {
+    function waitOn() {
+      return [Meteor.subscribe('service'),
+      Meteor.subscribe('serviceQualityECD'),
+      Meteor.subscribe('facility'),
+      Meteor.subscribe('facilityQualityECD'),
+      Meteor.subscribe('organisation'),
+      // Meteor.subscribe('servBeneficiaryGroup'),
+      Meteor.subscribe('staff')];
+    }
+
+    return waitOn;
+  }(), // waitOn
   action: function () {
-    this.render('loadData');
-  }   
+    function action() {
+      this.render('loadData');
+    }
+
+    return action;
+  }()
 });
 
 Router.route('/reporting', {
   name: 'reporting',
-  waitOn: function(){
-  return [
-  Meteor.subscribe('rep01RegisteredAndFundedECDWard'), 
-  Meteor.subscribe('rep01RegisteredAndFundedECD'), 
-  Meteor.subscribe('rep02StaffTrainingNeedsWard'), 
-  Meteor.subscribe('rep02StaffTrainingNeeds'), 
-  Meteor.subscribe('rep03SitesRequiringBasicServicesWard'),
-  Meteor.subscribe('rep03SitesRequiringBasicServices'),
-  Meteor.subscribe('rep04BeneficiaryGroupMuni')
-       // );  // waitOn .. return
-     ];
-   },
- action: function () {
-  this.render('reporting');
-  }
-});
+  waitOn: function () {
+    function waitOn() {
+      return [Meteor.subscribe('ofsMergedView'),
+      Meteor.subscribe('rep01RegisteredAndFundedECD'),
+      Meteor.subscribe('rep02StaffTrainingNeeds'),
+      Meteor.subscribe('rep03SitesRequiringBasicServices'),
+      Meteor.subscribe('rep04BeneficiaryGroupMuni')
+      // );  // waitOn .. return
+      ];
+    }
 
+    return waitOn;
+  }(),
+  action: function () {
+    function action() {
+      // this.next();
+      this.render('reporting');
+    }
+
+    return action;
+  }()
+});
