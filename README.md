@@ -55,13 +55,13 @@ If you'd like to get added to request a username, please [comment on this discus
 
 ## INVITATION to collaborate:
 
-### contrbutions requested:
+### contributions requested:
 
 * someone with good full stack web app knowledge to do an architectural and code review of the design
 * someone with experience with any of the roadmap items above, particularly the offline data, Cordova and testing items, to assist with integration of those.
 
 ### What's in it for you:
-* use and even master powerful, trending technolgies, with my guidance
+* use and even master powerful, trending technologies, with my guidance
 * use your gifts and experience to make a difference in this world, to [people who really need it](https://youtu.be/44G9j91jiC8 )  
 * be involved with a fun and rewarding project and a brilliant project team who are really passionate about this
 
