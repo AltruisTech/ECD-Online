@@ -1,6 +1,6 @@
 # ECD-Online
 
-A web based information management system for regional networking of early childhood development (ECD) services, built using meteor.js. For [this brilliant NGO](http://www.nag.org.za/about-us/), which serves the largely rural Ugu district of KZN, South Africa
+A web based information management system for regional networking of early childhood development (ECD) services, built using meteor.js. For [this brilliant NGO](http://www.nag.org.za/), which serves the largely rural Ugu district of KZN, South Africa
 
 
 
